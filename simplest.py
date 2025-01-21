@@ -34,14 +34,16 @@ n_observations = len(observations)
 # TRANSITION PROBABILITIES: These are the probabilities of switching between states
 # this matrix tells the likelihood of switching between states 
 # rainy -> rainy, rainy -> sunny, sunny -> rainy, sunny -> sunny
+# square matrix of size n_states x n_states
 transition_probabilities = np.array([
     [0.7, 0.3],
     [0.4, 0.6]
 ]) 
 
-# # EMISSION PROBABILITIES: These are the probabilities of seeing observations given the state
-# # This tells the likelihood of observing a specific activity given a particular hidden state
-# # clean|rainy = 0.5, shop|rainy = 0.4, walk|rainy = 0.1
+# EMISSION PROBABILITIES: These are the probabilities of seeing observations given the state
+# This tells the likelihood of observing a specific activity given a particular hidden state
+# clean|rainy = 0.5, shop|rainy = 0.4, walk|rainy = 0.1
+# matrix of size n_states x n_observations 
 emission_probabilities = np.array([
     [0.1, 0.2, 0.7], # Rainy
     [0.6, 0.3, 0.1] # Sunny
