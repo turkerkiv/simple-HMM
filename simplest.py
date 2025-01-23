@@ -65,6 +65,7 @@ sequence_length = 10
 observed_sequence, states_sequence = model.sample(n_samples=sequence_length)
 print("Simulated hidden state: (NOT KNOWN BY PREDICTER)", [states[i] for i in states_sequence])
 
+# !!!!! MultinomialHMM changed and became the one uses one-hot encoding now. It was categorial so it was like label encoding !!!!!
 print("Simulated observed states:", [observations[np.where(observed_sequence[i] == 1)[0][0]] for i in range(len(observed_sequence))])
 
 # Decode hidden states based on observed sequence
