@@ -107,3 +107,50 @@ Each state in the HMM has a GMM that describes the distribution of the acoustic 
 Multinomial HMM: For discrete observations (e.g., categories, symbols).
 
 Gaussian HMM (GMM-HMM): For continuous observations (e.g., speech features, sensor data).
+
+
+----------------------------------------------
+
+1. Ayrık (Discrete) Veri Nedir?
+Ayrık veri, sınırlı sayıda kategori veya değer içeren veridir.
+
+Bu veri türü, sayılamayan veya gruplanabilen şeylerdir.
+
+Örnekler:
+
+Hava durumu: ['güneşli', 'yağmurlu', 'bulutlu']
+
+Aktivite: ['yürü', 'alışveriş', 'temizlik']
+
+Zar atma: [1, 2, 3, 4, 5, 6]
+
+Trafik ışıkları: ['kırmızı', 'sarı', 'yeşil']
+
+Örnek:
+Bir hava durumu modelinde:
+
+Gözlemler: ['yürü', 'alışveriş', 'temizlik'] (ayrık veri).
+
+Bu gözlemler, kategorik olduğu için Multinomial HMM kullanılır.
+
+2. Sürekli (Continuous) Veri Nedir?
+Sürekli veri, herhangi bir aralıkta sonsuz sayıda değer alabilen veridir.
+
+Bu veri türü, ölçülebilen şeylerdir.
+
+Örnekler:
+
+Ses sinyalleri: MFCC'ler (Mel-Frekans Kepstral Katsayıları).
+
+Sıcaklık: [20.5°C, 21.3°C, 22.1°C]
+
+Hız: [50.2 km/s, 51.0 km/s, 52.3 km/s]
+
+Boy uzunluğu: [1.75 m, 1.80 m, 1.85 m]
+
+Örnek:
+Bir konuşma tanıma sisteminde:
+
+Gözlemler: MFCC'ler (örneğin, [0.5, -0.3, 1.2, ...]).
+
+Bu gözlemler, sürekli olduğu için Gaussian HMM kullanılır.
