@@ -72,13 +72,13 @@ if __name__ == "__main__":
     print("\n=== Training GMM-HMM Models ===")
     for word in words:
         print(f"\nTraining model for word: {word}")
-        mfccs = extract_mfcc(f"4-word-gmmhmm-project/dataset/{word}.wav")
+        mfccs = extract_mfcc(f"word-level-gmmhmm/dataset/{word}.wav")
         models[word] = train_gmm_hmm(mfccs)
         print(f"Model for '{word}' trained successfully!")
 
     # Step 5: Test on a new audio file
     print("\n=== Testing the Model ===")
-    test_audio = "4-word-gmmhmm-project/dataset/test_git.wav"
+    test_audio = "word-level-gmmhmm/dataset/test_git.wav"
     print(f"Testing on audio file: {test_audio}")
     predicted_word = predict_word(test_audio, models)
     print(f"\nFinal Prediction: The word is '{predicted_word}'")
