@@ -172,3 +172,5 @@ cython_debug/
 .pypirc
 
 *.m4a
+*.wav
+*.mp3
