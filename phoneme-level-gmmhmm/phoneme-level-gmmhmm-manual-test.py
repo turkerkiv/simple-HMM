@@ -23,33 +23,16 @@ def trim_silence(input_path, output_path, silence_thresh=-50):  # Less aggressiv
 
 # Preprocess audio files (run only once)
 convert_audio(
-    "phoneme-level-gmmhmm/dataset/kale.wav",
-    "phoneme-level-gmmhmm/dataset/kale_16khz.wav",
-)
-convert_audio(
-    "phoneme-level-gmmhmm/dataset/ekmek.wav",
-    "phoneme-level-gmmhmm/dataset/ekmek_16khz.wav",
-)
-convert_audio(
-    "phoneme-level-gmmhmm/dataset/mama.wav",
-    "phoneme-level-gmmhmm/dataset/mama_16khz.wav",
+    "phoneme-level-gmmhmm/dataset/kale_male.wav",
+    "phoneme-level-gmmhmm/dataset/kale_male_16khz.wav",
 )
 
 trim_silence(
-    "phoneme-level-gmmhmm/dataset/kale_16khz.wav",
-    "phoneme-level-gmmhmm/dataset/kale_16khz_trimmed.wav",
-)
-trim_silence(
-    "phoneme-level-gmmhmm/dataset/ekmek_16khz.wav",
-    "phoneme-level-gmmhmm/dataset/ekmek_16khz_trimmed.wav",
-)
-trim_silence(
-    "phoneme-level-gmmhmm/dataset/mama_16khz.wav",
-    "phoneme-level-gmmhmm/dataset/mama_16khz_trimmed.wav",
+    "phoneme-level-gmmhmm/dataset/kale_male_16khz.wav",
+    "phoneme-level-gmmhmm/dataset/kale_male_16khz_trimmed.wav",
 )
 
 # Main code
-words = ["kale", "mama", "ekmek"]
 phoneme_mfccs = {}
 mfccs = {}
 
@@ -74,6 +57,7 @@ def split_mfcc_by_phonemes(mfcc, word):
         if phoneme not in phoneme_mfccs:
             phoneme_mfccs[phoneme] = []
         phoneme_mfccs[phoneme].append(segment)
+
 
 def train_phoneme_hmm(segments, n_states=3):
     model = hmm.GaussianHMM(n_components=n_states, covariance_type="diag", n_iter=100)
@@ -110,15 +94,16 @@ def train_phoneme_hmm(segments, n_states=3):
 
 
 # Extract MFCCs for each word
-mfccs["kale"] = extract_mfcc("phoneme-level-gmmhmm/dataset/kale.wav")
-mfccs["mama"] = extract_mfcc("phoneme-level-gmmhmm/dataset/mama.wav")
-mfccs["ekmek"] = extract_mfcc("phoneme-level-gmmhmm/dataset/ekmek.wav")
+mfccs["kale"] = extract_mfcc("phoneme-level-gmmhmm/dataset/kale_16khz_trimmed.wav")
+mfccs["mama"] = extract_mfcc("phoneme-level-gmmhmm/dataset/mama_16khz_trimmed.wav")
+mfccs["ekmek"] = extract_mfcc("phoneme-level-gmmhmm/dataset/ekmek_16khz.wav")
+
 for word in mfccs:
     print(f"Word '{word}' has shape: {mfccs[word].shape}")
 
 # Split MFCCs by phonemes
-for word in words:
-    split_mfcc_by_phonemes(mfccs[word], word)
+for word, mfcc in mfccs.items():
+    split_mfcc_by_phonemes(mfcc, word)
 
 # Print the number of segments for each phoneme
 for phoneme in phoneme_mfccs:
@@ -133,7 +118,7 @@ for phoneme, segments in phoneme_mfccs.items():
     phoneme_hmms[phoneme] = train_phoneme_hmm(segments)
 
 # Test the system
-test_mfcc = extract_mfcc("phoneme-level-gmmhmm/dataset/mama.wav")
+test_mfcc = extract_mfcc("phoneme-level-gmmhmm/dataset/kale_male_16khz_trimmed.wav")
 mfcc_length = test_mfcc.shape[0]
 word_length = 4
 split_len = mfcc_length // word_length
